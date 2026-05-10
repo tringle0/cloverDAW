@@ -1,0 +1,13 @@
+{
+  "dependencies": [
+    {
+      "name": "imgui",
+      "features": [
+        "sdl3-binding",
+        "opengl3-binding"
+      ]
+    },
+    "juce",
+    "sdl3"
+  ]
+}
