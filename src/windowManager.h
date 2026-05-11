@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "headers/window.h"
+#include "models/window.h"
 
 //simple window manager that creates windows
 class WindowManager {

@@ -7,6 +7,7 @@
 #include <SDL3/SDL_opengl.h>
 #include "windowManager.h"
 #include "windows/exampleWindow.h" 
+#include "windows/layerListWindow.h" 
 
 int main()
 {
@@ -25,12 +26,12 @@ int main()
     //connect imgui to openGL
     ImGui_ImplOpenGL3_Init("#version 130");
 
-
+    //setup windows manager
     WindowManager wm;
     wm.addWindow(new ExampleWindow("example window 1"));
-    wm.addWindow(new ExampleWindow("example window 2"));
+    wm.addWindow(new LayerListWindow("layer list"));
 
-
+    //setup events
     SDL_Event event;
     bool running = true;
 
@@ -62,7 +63,7 @@ int main()
         SDL_GL_SwapWindow(window);
     }
 
-    //cleanup stuff
+    //cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();

@@ -1,5 +1,6 @@
 #pragma once
-#include "../headers/window.h"
+#include "../models/window.h"
+
 
 class ExampleWindow : public IWindow {
 public:

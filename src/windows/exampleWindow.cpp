@@ -2,6 +2,8 @@
 #include "exampleWindow.h"
 #include <imgui.h>
 
+
+
 ExampleWindow::ExampleWindow(std::string name) {
     this->name = name;
 }
