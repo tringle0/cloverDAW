@@ -1,4 +1,5 @@
-﻿#include "cloverDAW.h"
+﻿#pragma once
+#include "cloverDAW.h"
 #include <SDL3/SDL.h>
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>

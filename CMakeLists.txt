@@ -10,13 +10,14 @@ find_package(imgui CONFIG REQUIRED)
 # Add source to this project's executable.
 add_executable (cloverDAW
 "src/cloverDAW.cpp"
-"cloverDAW.h"
+"src/cloverDAW.h"
 "src/headers/layer.h"
 "src/headers/synth.h"
 "src/headers/note.h"
 "src/headers/window.h"
 "src/windowManager.h"
 "src/windows/exampleWindow.h"
+"src/windows/exampleWindow.cpp"
 "src/windowManager.cpp"
 "src/windows/exampleWindow.h"
 )

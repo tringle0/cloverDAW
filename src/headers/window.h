@@ -1,4 +1,4 @@
-#pragma once;
+#pragma once
 #include <string>
 
 //interface for a displayed window
@@ -8,5 +8,5 @@ public:
 	virtual void onOpen() {};
 	virtual void update() = 0;
 private:
-	void render();
+	virtual void render() {};
 };
