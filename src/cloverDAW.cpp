@@ -1,15 +1,15 @@
-﻿#pragma once
-#include "cloverDAW.h"
+﻿#include "cloverDAW.h"
 #include <SDL3/SDL.h>
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
 #include <SDL3/SDL_opengl.h>
-#include "windowManager.cpp"
-#include "windows/exampleWindow.cpp"
+#include "windowManager.h"
+#include "windows/exampleWindow.h" 
 
 int main()
 {
+
     //setup SDL
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -24,9 +24,12 @@ int main()
     //connect imgui to openGL
     ImGui_ImplOpenGL3_Init("#version 130");
 
+
     WindowManager wm;
-    wm.addWindow()
-    
+    wm.addWindow(new ExampleWindow("example window 1"));
+    wm.addWindow(new ExampleWindow("example window 2"));
+
+
     SDL_Event event;
     bool running = true;
 
@@ -45,10 +48,7 @@ int main()
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
-        
-
-        //calculate draw data
-        ImGui::End();
+        wm.renderAll();
 
         // render window
         ImGui::Render();

@@ -4,8 +4,8 @@
 
 class WindowManager {
 public:
-	void addWindow(IWindow window);
+	void addWindow(IWindow* window);
 	void renderAll();
 private:
-	std::vector<IWindow> windows;
+	std::vector<IWindow*> windows;
 };
