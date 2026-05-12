@@ -4,5 +4,8 @@
 
 class toolbar{
 private:
-    int currentToolInd;
+    int currentToolIndex;
+    std::vector<tool> tools;
+public:
+    void chooseTool(int toolIndex);
 };
