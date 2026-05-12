@@ -4,8 +4,8 @@
 //interface for a displayed window
 class IWindow {
 public:
-	//whether the window is open
-	bool open;
+	bool visible;
+	bool closable;
 
 	//id of the window, needs to be unique for each window
 	std::string name;

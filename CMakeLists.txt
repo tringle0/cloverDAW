@@ -13,6 +13,8 @@ add_executable (cloverDAW
 
 "src/cloverDAW.h"
 "src/cloverDAW.cpp"
+"src/app.h"
+"src/app.cpp"
 
 "src/models/layer.h"
 "src/models/synth.h"
@@ -27,8 +29,12 @@ add_executable (cloverDAW
 "src/windows/layerListWindow.cpp"
 
 
-"src/windowManager.h"
-"src/windowManager.cpp"
+"src/controllers/windowManager.h"
+"src/controllers/windowManager.cpp"
+
+
+"src/windows/synthEditor.h"
+"src/windows/synthEditor.cpp"
 
 
 )
