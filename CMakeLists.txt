@@ -18,8 +18,8 @@ add_executable (cloverDAW
 "src/models/synth.h"
 "src/models/note.h"
 "src/models/window.h"
-"src/models/layerList.h"
-"src/models/layerList.cpp"
+"src/models/song.h"
+"src/models/song.cpp"
 
 "src/windows/exampleWindow.h"
 "src/windows/exampleWindow.cpp"
