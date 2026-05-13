@@ -5,5 +5,9 @@ class SynthEditor : public IWindow{
 public:
 	Synth* synth;
 	SynthEditor(std::string name, Synth* synth);
+
+	int selectedWaveForm;
+	float volume;
+
 	void update();
 };
