@@ -23,6 +23,12 @@ add_executable (cloverDAW
 "src/models/song.h"
 "src/models/song.cpp"
 
+"src/models/drawTool.h"
+"src/models/selectTool.h"
+"src/models/tool.h"
+
+
+
 "src/windows/exampleWindow.h"
 "src/windows/exampleWindow.cpp"
 "src/windows/layerListWindow.h"
@@ -31,6 +37,9 @@ add_executable (cloverDAW
 
 "src/controllers/windowManager.h"
 "src/controllers/windowManager.cpp"
+"src/controllers/editor.h"
+"src/controllers/playback.h"
+"src/controllers/toolbar.h"
 
 
 "src/windows/synthEditor.h"

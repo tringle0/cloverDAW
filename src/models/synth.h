@@ -11,18 +11,19 @@ class IEffect {
 
 struct Envelope {
 public:
-	double attack; //in ms
-	double decay; //in ms
-	double sustain; //in %
-	double release; //in ms
+	float attack = 0; //in ms
+	float decay = 0; //in ms
+	float sustain = 1; //in %
+	float release = 0; //in ms
 };
 
 class Synth {
-	WaveForm waveform;
+public:
+	WaveForm waveform = sawtooth;
 	Envelope envelope;
 
-	double loudness;
-	double detune;
+	float loudness = 0;
+	float detune = 0;
 
 	std::vector<IEffect> effects;
 };
