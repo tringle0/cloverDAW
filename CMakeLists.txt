@@ -9,16 +9,34 @@ find_package(imgui CONFIG REQUIRED)
 
 # Add source to this project's executable.
 add_executable (cloverDAW
+
+
+"src/cloverDAW.h"
 "src/cloverDAW.cpp"
-"cloverDAW.h"
-"src/headers/layer.h"
-"src/headers/synth.h"
-"src/headers/note.h"
-"src/headers/window.h"
-"src/windowManager.h"
+"src/app.h"
+"src/app.cpp"
+
+"src/models/layer.h"
+"src/models/synth.h"
+"src/models/note.h"
+"src/models/window.h"
+"src/models/song.h"
+"src/models/song.cpp"
+
 "src/windows/exampleWindow.h"
-"src/windowManager.cpp"
-"src/windows/exampleWindow.h"
+"src/windows/exampleWindow.cpp"
+"src/windows/layerListWindow.h"
+"src/windows/layerListWindow.cpp"
+
+
+"src/controllers/windowManager.h"
+"src/controllers/windowManager.cpp"
+
+
+"src/windows/synthEditor.h"
+"src/windows/synthEditor.cpp"
+
+
 )
 
 target_include_directories(cloverDAW PRIVATE
