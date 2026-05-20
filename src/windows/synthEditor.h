@@ -7,7 +7,5 @@ public:
 	SynthEditor(std::string name, Synth* synth);
 
 	int selectedWaveForm;
-	float volume;
-
 	void update();
 };

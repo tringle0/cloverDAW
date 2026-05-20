@@ -46,7 +46,7 @@ add_executable (cloverDAW
 "src/windows/synthEditor.cpp"
 
 
-)
+ )
 
 target_include_directories(cloverDAW PRIVATE
     ${CMAKE_SOURCE_DIR}
