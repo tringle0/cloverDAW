@@ -4,16 +4,7 @@
 
 class Song {
 public:
-	std::string title, artist;
-
-	Song();
-
-	int selectedLayerIndex = 0;
+	std::string title = "untitled";
+	std::string artist = "unknown";
 	std::vector<Layer*> layers;
-
-	Layer* getLayer();
-
-	void addLayer(Layer* layer);
-	void selectLayer(int index);
-	void removeLayer();
 };

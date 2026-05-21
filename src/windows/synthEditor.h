@@ -1,11 +1,19 @@
 #pragma once
-#include "../models/synth.h"
+#include "../models/layer.h"
 #include "../models/window.h"
-class SynthEditor : public IWindow{
-public:
-	Synth* synth;
-	SynthEditor(std::string name, Synth* synth);
+#include "../models/uniqueCounter.h"
 
-	int selectedWaveForm;
+class LayerEditor : public IWindow{
+private:
+	Layer* layer;
+	int selectedWaveForm; //for the dropdown
+
+public:
+	LayerEditor(int layerIndex, Song* song, WindowManager* wm) : IWindow("synth editor", song, wm) {
+		layer = song->layers.at(layerIndex);
+		selectedWaveForm = layer->synth.waveform;
+	}
+
+	
 	void update();
 };

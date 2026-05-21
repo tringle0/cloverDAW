@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include "../models/window.h"
 
 //simple window manager that creates windows

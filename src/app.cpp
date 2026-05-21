@@ -18,8 +18,9 @@ void App::init() {
     ImGui_ImplOpenGL3_Init("#version 130");
 
     //setup window manager
-    wm.addWindow(new ExampleWindow("example window 1"));
-    wm.addWindow(new LayerListWindow("layer list", &song, &wm));
+    //wm.addWindow(new ExampleWindow("example window 1"));
+    wm.addWindow(new LayerListWindow(&song, &wm));
+    //wm.addWindow(new GridEditor());
 }
 
 void App::run() {

@@ -22,7 +22,6 @@ public:
 	WaveForm waveform = sawtooth;
 	Envelope envelope;
 
-	float loudness = 0;
 	float detune = 0;
 
 	std::vector<IEffect> effects;

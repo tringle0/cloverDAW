@@ -9,6 +9,9 @@ public:
 	Layer(std::string name) { this->name = name; };
 
 	std::string name;
+	float volume = 0;
+
+
 	Synth synth;
 	std::vector<Note> notes;
 };

@@ -21,11 +21,12 @@ add_executable (cloverDAW
 "src/models/note.h"
 "src/models/window.h"
 "src/models/song.h"
-"src/models/song.cpp"
 
-"src/models/drawTool.h"
-"src/models/selectTool.h"
-"src/models/tool.h"
+"src/models/uniqueCounter.h"
+
+"src/models/tools/drawTool.h"
+"src/models/tools/selectTool.h"
+"src/models/tools/tool.h"
 
 
 
@@ -33,6 +34,8 @@ add_executable (cloverDAW
 "src/windows/exampleWindow.cpp"
 "src/windows/layerListWindow.h"
 "src/windows/layerListWindow.cpp"
+"src/windows/gridEditor.h"
+"src/windows/gridEditor.cpp"
 
 
 "src/controllers/windowManager.h"
@@ -46,7 +49,7 @@ add_executable (cloverDAW
 "src/windows/synthEditor.cpp"
 
 
- )
+   "src/models/window.cpp")
 
 target_include_directories(cloverDAW PRIVATE
     ${CMAKE_SOURCE_DIR}
