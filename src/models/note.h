@@ -1,8 +1,9 @@
 #pragma once 
 
 class Note {
-	double start; //in beats
-	double length; //in beats
+public:
+	float start; //in beats
+	float length; //in beats
 
-	int note;
+	int pitch;
 };

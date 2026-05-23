@@ -20,7 +20,7 @@ void App::init() {
     //setup window manager
     //wm.addWindow(new ExampleWindow("example window 1"));
     wm.addWindow(new LayerListWindow(&song, &wm));
-    //wm.addWindow(new GridEditor());
+    wm.addWindow(new GridEditor(&song, &wm));
 }
 
 void App::run() {
