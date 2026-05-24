@@ -4,7 +4,7 @@
 
 class GridEditor : public IWindow {
 public:
-	GridEditor(App *app) : IWindow("piano roll", app, ImVec2(640, 480), false, false) {};
+	GridEditor(App *app) : IWindow("piano roll", app, ImVec2(640, 480), false, true) {};
 	void update() override;
 
 private:
@@ -35,8 +35,9 @@ private:
 	ImColor cRegular = IM_COL32(255, 255, 255, 120);
 	ImColor cHighlight = IM_COL32(132, 196, 145, 255);
 
-
+	void drawNote(float start, float length, float pitch);
 	void drawGrid();
 	void drawNotes();
 	void scaleGrid();
+	void editNotes();
 };
