@@ -1,6 +1,7 @@
 #pragma once
 #include "cloverDAW.h"
 #include "app.h"
+#include "controllers/audioPlayer.h"
 
 void App::init() {
     //setup SDL

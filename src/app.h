@@ -17,6 +17,7 @@ public:
 	
 	WindowManager wm;
 	Song song;
+	
 
 	//rendering related stuff
 	SDL_Event event;
