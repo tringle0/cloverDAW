@@ -2,7 +2,6 @@
 #include <imgui.h>
 #include <string>
 #include <iostream>
-#include "../app.h"
 #include "window.h"
 
 UniqueCounter IWindow::uc;
