@@ -27,7 +27,7 @@ IWindow::IWindow(std::string name, App *app, ImVec2 size, bool closable, bool sc
 //this should only be called by windowManager
 void IWindow::render(bool& windowOpen) {
 	ImGui::SetNextWindowSizeConstraints(ImVec2(100, 100), ImVec2(FLT_MAX, FLT_MAX));
-	ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(size, ImGuiCond_Appearing);
 	ImGui::Begin(name.c_str(), closable ? &windowOpen : NULL, scalable ? 0 : ImGuiWindowFlags_NoResize);
 	
 	update();

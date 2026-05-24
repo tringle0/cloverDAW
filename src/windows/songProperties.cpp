@@ -1,10 +1,9 @@
-#pragma once
-#include "../models/window.h"
+#include "songProperties.h"
+#include "imgui_stdlib.h"
+#include <string>
 
-class SongPropertiesWindow : IWindow{
-
-
-public:
-	SongPropertiesWindow(int layerIndex, App* app) : IWindow("synth editor", app, ImVec2(360, 240), true, false) {
-	}
-};
+void SongPropertiesWindow::update(){
+	ImGui::InputText("Title", &song->title);
+	ImGui::InputText("Artist", &song->artist);
+	ImGui::InputFloat("BPM", &song->bpm);
+}

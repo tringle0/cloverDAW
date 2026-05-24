@@ -4,6 +4,7 @@
 #include <imgui_impl_opengl3.h>
 #include "windows/layerList.h"
 #include "windows/gridEditor.h"
+#include "windows/songProperties.h"
 
 void App::init() {
     //setup SDL
@@ -25,6 +26,7 @@ void App::init() {
     //setup window manager
     wm.addWindow(new LayerListWindow(this));
     wm.addWindow(new GridEditorWindow(this));
+    wm.addWindow(new SongPropertiesWindow(this));
 }
 
 void App::run() {

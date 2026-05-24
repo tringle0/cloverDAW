@@ -123,7 +123,8 @@ void GridEditorWindow::update() {
 	viewPos = { ImGui::GetWindowPos().x + margins, ImGui::GetWindowPos().y + margins + ImGui::GetFrameHeight() };
 	viewScale = { ImGui::GetWindowWidth() - 2 * margins, ImGui::GetWindowHeight() - 2 * margins - ImGui::GetFrameHeight() };
 	cellSize = { viewScale.x / gridScale.x / subdivisions, viewScale.y / gridScale.y };
-	if (!song->layers.empty()) layer = song->layers[app->sessionData.selectedLayerIndex];
+	if (song->layers.empty()) layer = nullptr;
+		else layer = song->layers[app->sessionData.selectedLayerIndex];
 
 	//display layer name
 	if (layer != nullptr) {

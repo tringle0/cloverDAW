@@ -7,4 +7,6 @@ public:
 	std::string title = "untitled";
 	std::string artist = "unknown";
 	std::vector<Layer*> layers;
+
+	float bpm = 120;
 };
