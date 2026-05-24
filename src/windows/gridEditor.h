@@ -1,11 +1,10 @@
 #pragma once
 #include <vector>
 #include "../models/window.h"
-#include "../models/note.h"
 
 class GridEditor : public IWindow {
 public:
-	GridEditor(Song* song, WindowManager* wm) : IWindow("piano roll", song, wm, ImVec2(640, 480), true, false) {};
+	GridEditor(App *app) : IWindow("piano roll", app, ImVec2(640, 480), false, false) {};
 	void update() override;
 
 private:
@@ -14,20 +13,19 @@ private:
 	
 	//number of beats per measure
 	int timeSig = 4;
-
-	float margins = 10;
-
 	
+	int margins = 20;
+
 	//viewport (positions)
-	ImVec2 viewPos = ImVec2(10, 10);
-	ImVec2 viewScale = ImVec2(500, 400);
+	ImVec2 viewPos;
+	ImVec2 viewScale;
 	
 	//size of cell (screen size)
 	ImVec2 cellSize;
 
 	//grid (in cells)
-	ImVec2 gridPos = ImVec2(0, 0);
-	ImVec2 gridScale = ImVec2(40,60);
+	ImVec2 gridPos = ImVec2(0, 72);
+	ImVec2 gridScale = ImVec2(16,24);
 
 	Layer* layer = nullptr;
 	ImDrawList* dl = nullptr;

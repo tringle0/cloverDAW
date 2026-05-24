@@ -1,7 +1,10 @@
 #pragma once
 #include <vector>
 #include <unordered_map>
-#include "../models/window.h"
+
+
+//forward declaration
+class IWindow;
 
 //simple window manager that creates windows
 class WindowManager {

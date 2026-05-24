@@ -1,7 +1,10 @@
-#pragma once
-#include "../models/layer.h"
+#include <imgui.h>
 #include "../models/window.h"
-#include "../models/uniqueCounter.h"
+#include "../app.h"
+
+//forward declarations
+class Layer;
+class App;
 
 class LayerEditor : public IWindow{
 private:
@@ -9,7 +12,7 @@ private:
 	int selectedWaveForm; //for the dropdown
 
 public:
-	LayerEditor(int layerIndex, Song* song, WindowManager* wm) : IWindow("synth editor", song, wm) {
+	LayerEditor(int layerIndex, App* app) : IWindow("synth editor", app, ImVec2(360,240), true, false) {
 		layer = song->layers.at(layerIndex);
 		selectedWaveForm = layer->synth.waveform;
 	}

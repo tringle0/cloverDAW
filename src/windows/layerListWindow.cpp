@@ -1,4 +1,3 @@
-#pragma once
 #include "layerListWindow.h"
 #include "synthEditor.h"
 #include "imgui.h"
@@ -15,8 +14,8 @@ void LayerListWindow::update() {
 
 
 	ImGui::SetNextItemWidth(225);
-	if (ImGui::ListBox("##layer list", &selectedLayerIndex, items.data(), items.size(), 4)) {
-		// Code to run when selection changes
+	if (ImGui::ListBox("##layer list", &app->sessionData.selectedLayerIndex, items.data(), items.size(), 4)) {
+		
 	}
 
 	//add layer button
@@ -27,9 +26,9 @@ void LayerListWindow::update() {
 	//remove layer button
 	ImGui::SameLine();
 	if (song->layers.size() > 0 && ImGui::Button("delete")) {
-		song->layers.erase(song->layers.begin() + selectedLayerIndex);
-		nextLayerDefaultName.remove(selectedLayerIndex);
-		if(selectedLayerIndex > 0) selectedLayerIndex--;
+		song->layers.erase(song->layers.begin() + app->sessionData.selectedLayerIndex);
+		nextLayerDefaultName.remove(app->sessionData.selectedLayerIndex);
+		if(app->sessionData.selectedLayerIndex > 0) app->sessionData.selectedLayerIndex--;
 	}
 
 
@@ -37,7 +36,7 @@ void LayerListWindow::update() {
 	//edit layer
 	ImGui::SameLine();
 	if (song->layers.size() > 0 && ImGui::Button("edit")) {
-		windowManager->addWindow(new LayerEditor(selectedLayerIndex, song, windowManager ));
+		windowManager->addWindow(new LayerEditor(app->sessionData.selectedLayerIndex, app ));
 	}
 
 	

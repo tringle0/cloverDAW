@@ -9,7 +9,6 @@ void GridEditor::drawGrid() {
     //draw horizontal lines
     for (int rowCell = 0; rowCell < gridScale.y; rowCell++) {
         float pitch = gridPos.y - rowCell;
-        //don't draw outside of range
         if (pitch < 0 || pitch > 127) continue;
         bool octave = (int)pitch % 12 == 0;
 
@@ -26,8 +25,6 @@ void GridEditor::drawGrid() {
         float x = viewPos.x + colCell * cellSize.x;
         dl->AddLine({ x, viewPos.y }, { x, viewPos.y + viewScale.y }, quarter ? (barLine ? cHighlight : cRegular) : cLight);
     }
-
-       
 }
 
 void GridEditor::drawNotes() {
@@ -45,23 +42,33 @@ void GridEditor::drawNotes() {
         float x2 = x1 + n.length * cellSize.x * subdivisions - 1;
         float y1 = viewPos.y + r * cellSize.y + 1;
         float y2 = y1 + cellSize.y - 2;
+
+        //draw notes
         dl->AddRectFilled({ std::max(x1,viewPos.x), y1 }, { std::min(x2,viewPos.x + viewScale.x), y2 }, cHighlight, 0);
     }
 
 }
 
 void GridEditor::scaleGrid() {
-    ImGui::SetCursorPos({ 0, 0 });
+    ImVec2 mousePos = ImGui::GetMousePos();
+
+    //convert mouse position to grid coordinates (beat, pitch)
+    float mouseBeat = gridPos.x + (mousePos.x - viewPos.x) / (cellSize.x * subdivisions);
+    int mousePitch = gridPos.y - (int)((mousePos.y - viewPos.y) / cellSize.y);
+
+    //clamp values
+    mouseBeat = std::max(0.f, mouseBeat);
+    mousePitch = std::clamp(mousePitch, 0, 127);
+
+    //create an invisible button for detecting whether mouse is inside of grid
+    ImGui::SetCursorPos({ (float)margins, (float)margins + ImGui::GetFrameHeight() });
     ImGui::InvisibleButton("##grid", viewScale);
 
-    ImVec2 mousePos = ImGui::GetMousePos();
-    float mouseBeat = gridPos.x + (mousePos.x - viewPos.x) / (cellSize.x * subdivisions);
-    int mPitch = gridPos.y - (int)((mousePos.y - viewPos.y) / cellSize.y);
-    mouseBeat = std::max(0.f, mouseBeat);
-    mPitch = std::clamp(mPitch, 0, 127);
-
+    //manage input
     if (ImGui::IsItemHovered()) {
         ImGuiIO& io = ImGui::GetIO();
+
+        //zoom and panning of grid
         if (io.MouseWheel != 0.f) {
             if (io.KeyAlt) {
                 if (io.KeyShift) {
@@ -84,15 +91,15 @@ void GridEditor::scaleGrid() {
         }
         //add note on left click
         if (ImGui::IsMouseClicked(0)) {
-            float snappedBeat = roundf(mouseBeat*subdivisions)/subdivisions;
-            std::cout << "placed note" << snappedBeat << "," << mPitch << std::endl;
-            layer->notes.push_back({ snappedBeat, 1/(float)subdivisions, mPitch });
+            float snappedBeat = floorf(mouseBeat*subdivisions)/subdivisions;
+            std::cout << "placed note" << snappedBeat << "," << mousePitch << std::endl;
+            layer->notes.push_back({ snappedBeat, 1/(float)subdivisions, mousePitch });
         }
         //remove note on right click
         if (ImGui::IsMouseClicked(1)) {
-            float snappedBeat = roundf(mouseBeat * subdivisions) / subdivisions;
+            float snappedBeat = floorf(mouseBeat * subdivisions) / subdivisions;
             auto it = std::find_if(layer->notes.begin(), layer->notes.end(), [&](const Note& n) {
-                return n.pitch == mPitch && snappedBeat >= n.start && snappedBeat < n.start + n.length;
+                return n.pitch == mousePitch && snappedBeat >= n.start && snappedBeat < n.start + n.length;
             });
             if (it != layer->notes.end()) layer->notes.erase(it);
         }
@@ -100,29 +107,26 @@ void GridEditor::scaleGrid() {
 }
 
 void GridEditor::update() {
+    //calculate screen size of a cell
     cellSize = { viewScale.x / gridScale.x / subdivisions, viewScale.y / gridScale.y };
 
+    //display layer name
     if (layer != nullptr) {
         ImGui::Text(layer->name.c_str());
-        ImGui::Text(std::to_string(gridPos.x).c_str());
-        ImGui::Text(std::to_string(gridPos.y).c_str());
     }
     dl = ImGui::GetWindowDrawList();
-    viewPos = { ImGui::GetWindowPos().x + margins, ImGui::GetWindowPos().y + margins };
-    viewScale = { ImGui::GetWindowWidth() - 2 * margins, ImGui::GetWindowHeight() - 2 * margins };
+    viewPos = { ImGui::GetWindowPos().x + margins, ImGui::GetWindowPos().y + margins + ImGui::GetFrameHeight()};
+    viewScale = { ImGui::GetWindowWidth() - 2 * margins, ImGui::GetWindowHeight() - 2 * margins - ImGui::GetFrameHeight() };
 
 
-    ImVec2 clipMin = { viewPos.x, viewPos.y };
-    ImVec2 clipMax = { viewPos.x + viewScale.x, viewPos.y + viewScale.y };
-    dl->PushClipRect(clipMin, clipMax, true);
     drawGrid();
     if (!song->layers.empty()) {
-        layer = song->layers[0];
+        layer = song->layers[app->sessionData.selectedLayerIndex];
     }
     if (layer != nullptr) {
         drawNotes();
     }
     scaleGrid();
-    dl->PopClipRect();
+
     
 }
