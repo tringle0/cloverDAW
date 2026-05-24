@@ -2,7 +2,7 @@
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
-#include "windows/layerListWindow.h"
+#include "windows/layerList.h"
 #include "windows/gridEditor.h"
 
 void App::init() {
@@ -24,7 +24,7 @@ void App::init() {
 
     //setup window manager
     wm.addWindow(new LayerListWindow(this));
-    wm.addWindow(new GridEditor(this));
+    wm.addWindow(new GridEditorWindow(this));
 }
 
 void App::run() {

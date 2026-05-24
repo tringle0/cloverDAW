@@ -29,8 +29,8 @@ add_executable (cloverDAW
 "src/models/tools/tool.h"
 
 
-"src/windows/layerListWindow.h"
-"src/windows/layerListWindow.cpp"
+"src/windows/layerList.h"
+"src/windows/layerList.cpp"
 "src/windows/gridEditor.h"
 "src/windows/gridEditor.cpp"
 
@@ -46,7 +46,7 @@ add_executable (cloverDAW
 "src/windows/synthEditor.cpp"
 
 
-   "src/models/window.cpp")
+   "src/models/window.cpp" "src/windows/songProperties.cpp")
 
 target_include_directories(cloverDAW PRIVATE
     ${CMAKE_SOURCE_DIR}

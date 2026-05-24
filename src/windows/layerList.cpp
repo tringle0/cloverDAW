@@ -1,4 +1,4 @@
-#include "layerListWindow.h"
+#include "layerList.h"
 #include "synthEditor.h"
 #include "imgui.h"
 #include <string>
@@ -36,7 +36,7 @@ void LayerListWindow::update() {
 	//edit layer
 	ImGui::SameLine();
 	if (song->layers.size() > 0 && ImGui::Button("edit")) {
-		windowManager->addWindow(new LayerEditor(app->sessionData.selectedLayerIndex, app ));
+		windowManager->addWindow(new LayerEditorWindow(app->sessionData.selectedLayerIndex, app ));
 	}
 
 	

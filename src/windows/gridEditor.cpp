@@ -6,7 +6,7 @@
 #include "gridEditor.h"
 
 
-void GridEditor::drawNote(float start, float length, float pitch) {
+void GridEditorWindow::drawNote(float start, float length, float pitch, ImColor color) {
 	//grid positions relative to top left of grid
 	int r = -pitch + gridPos.y;
 	float c = start - gridPos.x;
@@ -18,10 +18,10 @@ void GridEditor::drawNote(float start, float length, float pitch) {
 	float y2 = y1 + cellSize.y - 2;
 
 	//draw notes
-	dl->AddRectFilled({ std::max(x1,viewPos.x), y1 }, { std::min(x2,viewPos.x + viewScale.x), y2 }, cHighlight, 0);
+	dl->AddRectFilled({ std::max(x1,viewPos.x), y1 }, { std::min(x2,viewPos.x + viewScale.x), y2 }, color, 0);
 }
 
-void GridEditor::drawGrid() {
+void GridEditorWindow::drawGrid() {
 	//draw horizontal lines
 	for (int rowCell = 0; rowCell < gridScale.y; rowCell++) {
 		float pitch = gridPos.y - rowCell;
@@ -43,14 +43,14 @@ void GridEditor::drawGrid() {
 	}
 }
 
-void GridEditor::drawNotes() {
+void GridEditorWindow::drawNotes() {
 	for (auto& n : layer->notes) {
-		drawNote(n.start, n.length, n.pitch);
+		drawNote(n.start, n.length, n.pitch, cHighlight);
 	}
 }
 
 
-void GridEditor::scaleGrid() {
+void GridEditorWindow::scaleGrid() {
 	ImGuiIO& io = ImGui::GetIO();
 
 	//zoom and panning of grid
@@ -76,7 +76,7 @@ void GridEditor::scaleGrid() {
 	}
 }
 
-void GridEditor::editNotes() {
+void GridEditorWindow::editNotes() {
 	ImVec2 mousePos = ImGui::GetMousePos();
 
 	//convert mouse position to grid coordinates (beat, pitch)
@@ -89,19 +89,21 @@ void GridEditor::editNotes() {
 
 	static float dragStart, dragEnd;
 
-	//add note on left click
+	//set note start on left click
 	if (ImGui::IsMouseClicked(0)) {
 		dragStart = floorf(mouseBeat * subdivisions) / subdivisions;
 	}
+	//add note when released
 	if (ImGui::IsMouseReleased(0)) {
 		dragEnd = ceil(mouseBeat * subdivisions) / subdivisions;
-		if (dragEnd >= dragStart) {
+		if (dragEnd > dragStart) {
 			float noteLength = dragEnd-dragStart;
 			layer->notes.push_back({ dragStart, noteLength, mousePitch });
 		}
 	}
+	//visualize note placement
 	if (ImGui::IsMouseDown(0)) {
-		drawNote(dragStart, ceil(mouseBeat * subdivisions) / subdivisions - dragStart, mousePitch);
+		drawNote(dragStart, ceil(mouseBeat * subdivisions) / subdivisions - dragStart, mousePitch, cLight);
 	}
 
 
@@ -115,7 +117,8 @@ void GridEditor::editNotes() {
 	}
 }
 
-void GridEditor::update() {
+void GridEditorWindow::update() {
+	//calculate variables
 	dl = ImGui::GetWindowDrawList();
 	viewPos = { ImGui::GetWindowPos().x + margins, ImGui::GetWindowPos().y + margins + ImGui::GetFrameHeight() };
 	viewScale = { ImGui::GetWindowWidth() - 2 * margins, ImGui::GetWindowHeight() - 2 * margins - ImGui::GetFrameHeight() };
@@ -135,8 +138,6 @@ void GridEditor::update() {
 	ImGui::InvisibleButton("##grid", viewScale);
 	if (ImGui::IsItemHovered()) {
 		scaleGrid();
-		if (layer != nullptr) 
-			editNotes();
-		
+		if (layer != nullptr) editNotes();
 	}
 }
