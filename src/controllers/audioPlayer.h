@@ -25,6 +25,8 @@ public:
     // changing volume
     void changeVolume(float vol);
 
+    
+
     audioPlayer();
 
 private:
@@ -33,6 +35,6 @@ private:
     bool isPlayTriggered = false;
     float phase = 0.0f;
     float volume = 0.0f; 
+    float frequency = 440.0f; // Fixed A4 note for default value
     const float sampleRate = 44100.0f; // default sample rate, how fast speaker cone (or voice coil) moves
-    const float frequency = 440.0f; // Fixed A4 note for testing
 };

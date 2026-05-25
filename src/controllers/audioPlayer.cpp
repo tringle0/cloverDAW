@@ -54,6 +54,8 @@ void audioPlayer::changeVolume(float vol)
     volume = vol;
 }
 
+
+
 void audioPlayer::update(Synth& currentSynthState)
 {
     std::cout << "updated, t=" << isPlayTriggered << " q=" << SDL_GetAudioStreamQueued(audioStream) << "\n";
