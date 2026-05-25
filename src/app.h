@@ -3,6 +3,7 @@
 #include <SDL3/SDL_opengl.h>
 #include "controllers/windowManager.h"
 #include "models/song.h"
+#include "controllers/notePlayer.h"
 #include "models/sessionData.h"
 #include "controllers/audioPlayer.h"
 
@@ -13,6 +14,7 @@ public:
 	WindowManager wm;
 	Song song;
 	AudioPlayer audio;
+	NotePlayer nPlayer;
 
 	//rendering related stuff
 	SDL_Event event;

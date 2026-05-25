@@ -59,6 +59,8 @@ void App::run() {
             audio.update(song.layers[sessionData.selectedLayerIndex]->synth);
         }
 
+        nPlayer.update(this);
+
         // render window
         ImGui::Render();
 

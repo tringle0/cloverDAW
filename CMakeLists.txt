@@ -45,6 +45,9 @@ add_executable (cloverDAW
 "src/controllers/windowManager.cpp"
 "src/controllers/audioPlayer.h"
 "src/controllers/audioPlayer.cpp"
+"src/controllers/notePlayer.h"
+"src/controllers/notePlayer.cpp"
+
 
 
 )

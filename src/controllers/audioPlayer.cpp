@@ -59,26 +59,39 @@ float midiToFreq(int midi) {
     return 440.0f * std::pow(2.0f, (midi - 69) / 12.0f);
 }
 
-void AudioPlayer::play(std::vector<std::pair<Note, Layer>> toPlay) {
+void AudioPlayer::play(std::vector<std::pair<Note*, Layer*>> toPlay) {
     if (!audioStream) return; // if no audioStream created, return 
 
     int queuedBytes = SDL_GetAudioStreamQueued(audioStream);    //amount of bytes that are current in the buffer
-    int bufferSize = 1024 * sizeof(float);                      //length of buffer, in bytes
+    int bufferSize = 8192 * sizeof(float);                      //length of buffer, in bytes
     if (queuedBytes >= bufferSize) return; // don't need to add more buffer if there's already enough
 
     int samplesNeeded = (bufferSize - queuedBytes) / sizeof(float); //number of samples to generate
     std::vector<float> buffer(samplesNeeded, 0.0f);
 
+    std::vector<Note*> toRemove;
+    for (auto& kv : notePhases) {
+        bool stillActive = false;
+        for (auto& pair : toPlay)
+            if (pair.first == kv.first) { stillActive = true; break; }
+        if (!stillActive)
+            toRemove.push_back(kv.first);
+    }
+    for (Note* n : toRemove)
+        notePhases.erase(n);
+
     // generate and mix each active note
-    for (auto& [note, layer] : toPlay) {
-        float freq = midiToFreq(note.pitch + layer.synth.detune);
+    for (auto& pair : toPlay) {
+        Note* note = pair.first;
+        Layer* layer = pair.second;
+        float freq = midiToFreq(note->pitch + layer->synth.detune);
         float phaseDelta = freq / sampleRate;
-        float localPhase = 0.0f; // each note gets its own phase per buffer fill
+        float& localPhase = notePhases[note]; // each note gets its own phase per buffer fill
 
         for (int i = 0; i < samplesNeeded; i++) {
             float sampleVal = 0.0f;
 
-            switch (layer.synth.waveform) {
+            switch (layer->synth.waveform) {
             case WaveForm::sine:
                 sampleVal = std::sin(localPhase * 2.0f * 3.14159265f);
                 break;
@@ -96,7 +109,7 @@ void AudioPlayer::play(std::vector<std::pair<Note, Layer>> toPlay) {
                 break;
             }
 
-            buffer[i] += sampleVal * layer.volume;
+            buffer[i] += sampleVal * layer->volume;
 
             localPhase += phaseDelta;
             if (localPhase >= 1.0f) localPhase -= 1.0f;
@@ -105,7 +118,7 @@ void AudioPlayer::play(std::vector<std::pair<Note, Layer>> toPlay) {
 
     // normalize by number of active notes to prevent clipping
     for (int i = 0; i < samplesNeeded; i++) {
-        buffer[i] = (buffer[i] / toPlay.size()) * volume;
+        buffer[i] = (buffer[i] / toPlay.size());
     }
 
     SDL_PutAudioStreamData(audioStream, buffer.data(), static_cast<int>(buffer.size() * sizeof(float)));
@@ -114,7 +127,7 @@ void AudioPlayer::play(std::vector<std::pair<Note, Layer>> toPlay) {
 
 void AudioPlayer::update(Synth& currentSynthState)
 {
-    std::cout << "updated, t=" << isPlayTriggered << " q=" << SDL_GetAudioStreamQueued(audioStream) << "\n";
+    //std::cout << "updated, t=" << isPlayTriggered << " q=" << SDL_GetAudioStreamQueued(audioStream) << "\n";
     if (!audioStream)
     {
         return; // if no audioStream created, return 
@@ -128,7 +141,7 @@ void AudioPlayer::update(Synth& currentSynthState)
     // need a buffer due to slight framerate inconsistencies, otherwise sound will come out as choppy or stuttering
 
     int queuedBytes = SDL_GetAudioStreamQueued(audioStream); // gets currently queued bytes
-    int bufferTarget = 1024 * sizeof(float); // buffer target
+    int bufferTarget = 4096 * sizeof(float); // buffer target
 
     if (queuedBytes >= bufferTarget)
     {

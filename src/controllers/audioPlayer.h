@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 #include <cstdlib>
+#include <map>
 #include "../models/synth.h"
 #include "../models/note.h"
 #include "../models/layer.h"
@@ -20,7 +21,7 @@ public:
 
     // Generates the waveform and pushes it straight to speakers
 
-    void play(std::vector<std::pair<Note, Layer>> toPlay);
+    void play(std::vector<std::pair<Note*, Layer*>> toPlay);
     void update(Synth& currentSynthState);
 
     // toggles the playing of the waveform
@@ -33,6 +34,8 @@ public:
 
 private:
     SDL_AudioStream* audioStream = nullptr; 
+
+    std::map<Note*, float> notePhases;
 
     bool isPlayTriggered = false;
     float phase = 0.0f;
