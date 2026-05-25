@@ -2,12 +2,13 @@
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
+#include <iostream>
 #include "windows/layerListWindow.h"
 #include "windows/gridEditor.h"
 
 void App::init() {
     //setup SDL
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
     //create window and openGL context
     window = SDL_CreateWindow("CloverDAW", 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
@@ -21,6 +22,9 @@ void App::init() {
     ImGui_ImplOpenGL3_Init("#version 130");
 
     sessionData = {};
+    audio.init();
+ 
+
 
     //setup window manager
     wm.addWindow(new LayerListWindow(this));
@@ -46,6 +50,11 @@ void App::run() {
 
         wm.renderAll();
 
+        //only execute if there are layers
+        if (!song.layers.empty()) {
+            audio.update(song.layers[sessionData.selectedLayerIndex]->synth);
+        }
+
         // render window
         ImGui::Render();
 
@@ -55,11 +64,13 @@ void App::run() {
         //draw window
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         SDL_GL_SwapWindow(window);
+
     }
 }
 
 void App::shutdown() {
     //cleanup
+    audio.shutdown();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();

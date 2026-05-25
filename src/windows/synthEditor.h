@@ -10,6 +10,7 @@ class LayerEditor : public IWindow{
 private:
 	Layer* layer;
 	int selectedWaveForm; //for the dropdown
+	bool wasTestHeld = false;
 
 public:
 	LayerEditor(int layerIndex, App* app) : IWindow("synth editor", app, ImVec2(360,240), true, false) {

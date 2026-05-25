@@ -4,6 +4,7 @@
 #include "controllers/windowManager.h"
 #include "models/song.h"
 #include "models/sessionData.h"
+#include "controllers/audioPlayer.h"
 
 class App {
 public:
@@ -11,7 +12,7 @@ public:
 	SessionData sessionData;
 	WindowManager wm;
 	Song song;
-	
+	audioPlayer audio;
 
 	//rendering related stuff
 	SDL_Event event;

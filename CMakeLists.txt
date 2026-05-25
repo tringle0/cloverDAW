@@ -46,7 +46,7 @@ add_executable (cloverDAW
 "src/windows/synthEditor.cpp"
 
 
-   "src/models/window.cpp" "src/controllers/audioPlayer.cpp"  "src/controllers/audioManger.cpp")
+   "src/models/window.cpp" "src/controllers/audioPlayer.cpp")
 
 target_include_directories(cloverDAW PRIVATE
     ${CMAKE_SOURCE_DIR}

@@ -10,12 +10,24 @@ void LayerEditor::update() {
 
 	//volume slider
 	ImGui::SliderFloat("volume (%)", &layer->volume, 0.0f, 1.0f, "%.3f");
+	app->audio.changeVolume(layer->volume);
 	
 	//waveform dropdown
 	const char* items[] = {"triangle", "sawtooth", "sine", "square", "noise"};
 	if (ImGui::Combo("waveform", &selectedWaveForm, items, IM_ARRAYSIZE(items))) {
 		layer->synth.waveform = (WaveForm)selectedWaveForm;
 	}
+
+	// play waveform
+	ImGui::Button("Test Waveform");
+	bool isHeld = ImGui::IsItemActive();
+	if (isHeld && !wasTestHeld) {
+		app->audio.triggerWave(true);
+	}
+	else if (!isHeld && wasTestHeld) {
+		app->audio.triggerWave(false);
+	}
+	wasTestHeld = isHeld; //flag for starting and stoping playing of wave
 	
 	//rename layer button
 	if (ImGui::Button("rename") && song->layers.size() > 0) {
@@ -36,7 +48,6 @@ void LayerEditor::update() {
 
 		ImGui::EndPopup();
 	}
-
 
 
 }
