@@ -1,10 +1,10 @@
 #include "audioPlayer.h"
 #include <iostream>
 
-audioPlayer::audioPlayer() {}
+AudioPlayer::AudioPlayer() {}
 
 
-bool audioPlayer::init()
+bool AudioPlayer::init()
 {
     // initial format of audio player
     SDL_AudioSpec spec;
@@ -26,7 +26,7 @@ bool audioPlayer::init()
     return true;
 }
 
-void audioPlayer::shutdown() // shut down and reset current audiostream
+void AudioPlayer::shutdown() // shut down and reset current audiostream
 {
     if (audioStream)
     {
@@ -35,7 +35,7 @@ void audioPlayer::shutdown() // shut down and reset current audiostream
     }
 }
 
-void audioPlayer::triggerWave(bool shouldPlay)
+void AudioPlayer::triggerWave(bool shouldPlay)
 {
     isPlayTriggered = shouldPlay;
     // Only executes when button not being held down
@@ -49,14 +49,70 @@ void audioPlayer::triggerWave(bool shouldPlay)
     }
 }
 
-void audioPlayer::changeVolume(float vol)
+void AudioPlayer::changeVolume(float vol)
 {
     volume = vol;
 }
 
+// Convert MIDI number to frequency
+float midiToFreq(int midi) {
+    return 440.0f * std::pow(2.0f, (midi - 69) / 12.0f);
+}
 
+void AudioPlayer::play(std::vector<std::pair<Note, Layer>> toPlay) {
+    if (!audioStream) return; // if no audioStream created, return 
 
-void audioPlayer::update(Synth& currentSynthState)
+    int queuedBytes = SDL_GetAudioStreamQueued(audioStream);    //amount of bytes that are current in the buffer
+    int bufferSize = 1024 * sizeof(float);                      //length of buffer, in bytes
+    if (queuedBytes >= bufferSize) return; // don't need to add more buffer if there's already enough
+
+    int samplesNeeded = (bufferSize - queuedBytes) / sizeof(float); //number of samples to generate
+    std::vector<float> buffer(samplesNeeded, 0.0f);
+
+    // generate and mix each active note
+    for (auto& [note, layer] : toPlay) {
+        float freq = midiToFreq(note.pitch + layer.synth.detune);
+        float phaseDelta = freq / sampleRate;
+        float localPhase = 0.0f; // each note gets its own phase per buffer fill
+
+        for (int i = 0; i < samplesNeeded; i++) {
+            float sampleVal = 0.0f;
+
+            switch (layer.synth.waveform) {
+            case WaveForm::sine:
+                sampleVal = std::sin(localPhase * 2.0f * 3.14159265f);
+                break;
+            case WaveForm::sawtooth:
+                sampleVal = (localPhase * 2.0f) - 1.0f;
+                break;
+            case WaveForm::square:
+                sampleVal = (localPhase < 0.5f) ? 1.0f : -1.0f;
+                break;
+            case WaveForm::triangle:
+                sampleVal = (localPhase < 0.5f) ? (4.0f * localPhase) - 1.0f : 3.0f - (4.0f * localPhase);
+                break;
+            case WaveForm::noise:
+                sampleVal = (static_cast<float>(std::rand()) / RAND_MAX) * 2.0f - 1.0f;
+                break;
+            }
+
+            buffer[i] += sampleVal * layer.volume;
+
+            localPhase += phaseDelta;
+            if (localPhase >= 1.0f) localPhase -= 1.0f;
+        }
+    }
+
+    // normalize by number of active notes to prevent clipping
+    for (int i = 0; i < samplesNeeded; i++) {
+        buffer[i] = (buffer[i] / toPlay.size()) * volume;
+    }
+
+    SDL_PutAudioStreamData(audioStream, buffer.data(), static_cast<int>(buffer.size() * sizeof(float)));
+
+}
+
+void AudioPlayer::update(Synth& currentSynthState)
 {
     std::cout << "updated, t=" << isPlayTriggered << " q=" << SDL_GetAudioStreamQueued(audioStream) << "\n";
     if (!audioStream)

@@ -12,7 +12,7 @@ public:
 	SessionData sessionData;
 	WindowManager wm;
 	Song song;
-	audioPlayer audio;
+	AudioPlayer audio;
 
 	//rendering related stuff
 	SDL_Event event;
