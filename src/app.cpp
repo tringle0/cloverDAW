@@ -5,6 +5,7 @@
 #include "windows/layerList.h"
 #include "windows/gridEditor.h"
 #include "windows/songProperties.h"
+#include "windows/playback.h"
 
 void App::init() {
     //setup SDL
@@ -27,6 +28,7 @@ void App::init() {
     wm.addWindow(new LayerListWindow(this));
     wm.addWindow(new GridEditorWindow(this));
     wm.addWindow(new SongPropertiesWindow(this));
+    wm.addWindow(new PlaybackWindow(this));
 }
 
 void App::run() {

@@ -14,7 +14,7 @@ void LayerListWindow::update() {
 
 
 	ImGui::SetNextItemWidth(225);
-	if (ImGui::ListBox("##layer list", &app->sessionData.selectedLayerIndex, items.data(), items.size(), 4)) {
+	if (ImGui::ListBox("##layer list", &app->sessionData.selectedLayerIndex, items.data(), items.size(), 20)) {
 		
 	}
 

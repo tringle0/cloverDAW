@@ -7,8 +7,9 @@
 
 
 void GridEditorWindow::drawNote(float start, float length, float pitch, ImColor color) {
+	// cells relative to top right corner
 	int r = -(int)pitch + (int)gridPos.y;
-	float c = start * subdivisions - gridPos.x;  // cells relative to left edge
+	float c = start * subdivisions - gridPos.x;  
 
 	// bounds (in cells)
 	if (r < 0 || r >= (int)gridScale.y) return;
@@ -51,7 +52,6 @@ void GridEditorWindow::drawGrid() {
 	//columns
 	for (int relativeCol = 0; relativeCol < gridScale.x; relativeCol++) {
 		int col = (int)gridPos.x + relativeCol;
-		
 		
 		//draw vertical lines
 		bool quarter = col % subdivisions == 0;
@@ -148,8 +148,6 @@ void GridEditorWindow::update() {
 	cellSize = { viewScale.x / gridScale.x, viewScale.y / gridScale.y };
 	if (song->layers.empty()) layer = nullptr;
 		else layer = song->layers[app->sessionData.selectedLayerIndex];
-
-	ImGui::Text(std::to_string(gridPos.x).c_str());
 
 	drawGrid();
 

@@ -38,7 +38,7 @@ add_executable (cloverDAW
 "src/controllers/windowManager.h"
 "src/controllers/windowManager.cpp"
 "src/controllers/editor.h"
-"src/controllers/playback.h"
+
 "src/controllers/toolbar.h"
 
 
@@ -46,7 +46,7 @@ add_executable (cloverDAW
 "src/windows/synthEditor.cpp"
 
 
-   "src/models/window.cpp" "src/windows/songProperties.cpp")
+   "src/models/window.cpp" "src/windows/songProperties.cpp"  "src/windows/playback.h" "src/windows/playback.cpp")
 
 target_include_directories(cloverDAW PRIVATE
     ${CMAKE_SOURCE_DIR}
