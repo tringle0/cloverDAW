@@ -9,7 +9,7 @@ public:
 	Layer(std::string name) { this->name = name; };
 
 	std::string name;
-	float volume = 0;
+	float volume = 1.f;
 
 
 	Synth synth;

@@ -29,9 +29,6 @@ add_executable (cloverDAW
 "src/models/tools/tool.h"
 
 
-
-"src/windows/exampleWindow.h"
-"src/windows/exampleWindow.cpp"
 "src/windows/layerListWindow.h"
 "src/windows/layerListWindow.cpp"
 "src/windows/gridEditor.h"

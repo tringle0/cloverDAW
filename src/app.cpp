@@ -1,7 +1,9 @@
-#pragma once
-#include "cloverDAW.h"
 #include "app.h"
-#include "controllers/audioPlayer.h"
+#include <imgui.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_opengl3.h>
+#include "windows/layerListWindow.h"
+#include "windows/gridEditor.h"
 
 void App::init() {
     //setup SDL
@@ -18,10 +20,11 @@ void App::init() {
     //connect imgui to openGL
     ImGui_ImplOpenGL3_Init("#version 130");
 
+    sessionData = {};
+
     //setup window manager
-    //wm.addWindow(new ExampleWindow("example window 1"));
-    wm.addWindow(new LayerListWindow(&song, &wm));
-    wm.addWindow(new GridEditor(&song, &wm));
+    wm.addWindow(new LayerListWindow(this));
+    wm.addWindow(new GridEditor(this));
 }
 
 void App::run() {

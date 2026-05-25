@@ -1,20 +1,14 @@
 #pragma once
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_opengl.h>
 #include "controllers/windowManager.h"
 #include "models/song.h"
-#include <SDL3/SDL.h>
-#include <imgui.h>
-#include <imgui_impl_sdl3.h>
-#pragma once
-#include <imgui_impl_opengl3.h>
-#include <SDL3/SDL_opengl.h>
-#include "windows/exampleWindow.h" 
-#include "windows/layerListWindow.h" 
-#include "windows/gridEditor.h" 
-
+#include "models/sessionData.h"
 
 class App {
 public:
 	
+	SessionData sessionData;
 	WindowManager wm;
 	Song song;
 	

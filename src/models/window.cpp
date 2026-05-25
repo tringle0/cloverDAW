@@ -1,12 +1,14 @@
 #pragma once
-#include "window.h"
+#include <imgui.h>
 #include <string>
 #include <iostream>
+#include "../app.h"
+#include "window.h"
 
 UniqueCounter IWindow::uc;
 
 //constructor
-IWindow::IWindow(std::string name, Song* song, WindowManager* wm, ImVec2 size, bool closable, bool scalable) {
+IWindow::IWindow(std::string name, App *app, ImVec2 size, bool closable, bool scalable) {
 	id = uc.produceUnique();
 	
 	this->size = size;
@@ -14,8 +16,9 @@ IWindow::IWindow(std::string name, Song* song, WindowManager* wm, ImVec2 size, b
 	this->closable = closable;
 	this->scalable = scalable;
 
-	windowManager = wm;
-	this->song = song;
+	this->app = app;
+	windowManager = &app->wm;
+	song = &app->song;
 
 	std::cout << this->name;
 }

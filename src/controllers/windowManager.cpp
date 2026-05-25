@@ -1,6 +1,7 @@
 #pragma once
 #include "windowManager.h"
 #include "imgui.h"
+#include "../models/window.h"
 #include <iostream>
 
 void WindowManager::addWindow(IWindow* window) {
