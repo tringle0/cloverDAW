@@ -6,14 +6,14 @@
 class Layer;
 class App;
 
-class LayerEditor : public IWindow{
+class LayerEditorWindow : public IWindow{
 private:
 	Layer* layer;
 	int selectedWaveForm; //for the dropdown
 	bool wasTestHeld = false;
 
 public:
-	LayerEditor(int layerIndex, App* app) : IWindow("synth editor", app, ImVec2(360,240), true, false) {
+	LayerEditorWindow(int layerIndex, App* app) : IWindow("synth editor", app, ImVec2(360,240), true, false) {
 		layer = song->layers.at(layerIndex);
 		selectedWaveForm = layer->synth.waveform;
 	}

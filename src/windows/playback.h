@@ -1,0 +1,21 @@
+#pragma once
+#include "../models/window.h"
+#include <chrono>
+
+class App;
+
+class PlaybackWindow : public IWindow {
+private:
+	std::chrono::steady_clock::time_point startedTime;	//time when playback started
+	std::chrono::steady_clock::time_point now;	//current time
+
+	float startedBeat = 0;	//beat of the song at the start of the playback
+
+	bool loop = false;
+
+public:
+	PlaybackWindow(App* app) : IWindow("playback", app, ImVec2(240, 80), false, false) {}
+	void update();
+	void startPlayback();
+	void stopPlayback();
+};

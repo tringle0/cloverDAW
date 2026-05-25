@@ -5,7 +5,7 @@
 #include "../models/window.h"
 #include <imgui.h>
 
-void LayerEditor::update() {
+void LayerEditorWindow::update() {
 	ImGui::Text(layer->name.c_str());
 
 	//volume slider

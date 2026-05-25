@@ -2,7 +2,6 @@
 #include <imgui.h>
 #include <string>
 #include <iostream>
-#include "../app.h"
 #include "window.h"
 
 UniqueCounter IWindow::uc;
@@ -26,9 +25,10 @@ IWindow::IWindow(std::string name, App *app, ImVec2 size, bool closable, bool sc
 //render function: call to render the window: returns true if closed
 //this should only be called by windowManager
 void IWindow::render(bool& windowOpen) {
-	ImGui::SetNextWindowSize(size);
+	ImGui::SetNextWindowSizeConstraints(ImVec2(100, 100), ImVec2(FLT_MAX, FLT_MAX));
+	ImGui::SetNextWindowSize(size, ImGuiCond_Appearing);
 	ImGui::Begin(name.c_str(), closable ? &windowOpen : NULL, scalable ? 0 : ImGuiWindowFlags_NoResize);
-
+	
 	update();
 
 	ImGui::End();

@@ -20,33 +20,34 @@ add_executable (cloverDAW
 "src/models/synth.h"
 "src/models/note.h"
 "src/models/window.h"
+"src/models/window.cpp"
 "src/models/song.h"
-
 "src/models/uniqueCounter.h"
-
 "src/models/tools/drawTool.h"
 "src/models/tools/selectTool.h"
 "src/models/tools/tool.h"
 
 
-"src/windows/layerListWindow.h"
-"src/windows/layerListWindow.cpp"
+"src/windows/layerList.h"
+"src/windows/layerList.cpp"
 "src/windows/gridEditor.h"
 "src/windows/gridEditor.cpp"
+"src/windows/synthEditor.h"
+"src/windows/synthEditor.cpp"
+"src/windows/songProperties.h"
+"src/windows/songProperties.cpp"
+"src/windows/playback.h"
+"src/windows/playback.cpp"
+
 
 
 "src/controllers/windowManager.h"
 "src/controllers/windowManager.cpp"
-"src/controllers/editor.h"
-"src/controllers/playback.h"
-"src/controllers/toolbar.h"
+"src/controllers/audioPlayer.h"
+"src/controllers/audioPlayer.cpp"
 
 
-"src/windows/synthEditor.h"
-"src/windows/synthEditor.cpp"
-
-
-   "src/models/window.cpp" "src/controllers/audioPlayer.cpp")
+)
 
 target_include_directories(cloverDAW PRIVATE
     ${CMAKE_SOURCE_DIR}
