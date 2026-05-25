@@ -5,8 +5,10 @@
 #include <cmath>
 #include <cstdlib>
 #include "../models/synth.h"
+#include "../models/note.h"
+#include "../models/layer.h"
 
-class audioPlayer
+class AudioPlayer
 {
 public:
 
@@ -17,6 +19,8 @@ public:
     void shutdown();
 
     // Generates the waveform and pushes it straight to speakers
+
+    void play(std::vector<std::pair<Note, Layer>> toPlay);
     void update(Synth& currentSynthState);
 
     // toggles the playing of the waveform
@@ -25,7 +29,7 @@ public:
     // changing volume
     void changeVolume(float vol);
 
-    audioPlayer();
+    AudioPlayer();
 
 private:
     SDL_AudioStream* audioStream = nullptr; 
