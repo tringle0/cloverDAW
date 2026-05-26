@@ -18,5 +18,4 @@ public:
 		ImGui::SliderFloat("detune (semitones)", &detune, -24.0f, 24.0f, "%.3f");
 	}
 	float detune; // number of semitones
-
 };
