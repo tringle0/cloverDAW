@@ -54,11 +54,6 @@ void App::run() {
 
         wm.renderAll();
 
-        //only execute if there are layers
-        if (!song.layers.empty()) {
-            audio.update(song.layers[sessionData.selectedLayerIndex]->synth);
-        }
-
         nPlayer.update(this);
 
         // render window
