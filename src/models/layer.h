@@ -15,5 +15,5 @@ public:
 
 	Synth synth;
 	std::vector<Note> notes;
-	std::vector<IEffect> effects;
+	std::vector<IEffect*> effects;
 };

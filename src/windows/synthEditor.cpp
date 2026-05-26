@@ -3,6 +3,7 @@
 #include "../models/synth.h"
 #include "../models/layer.h"
 #include "../models/window.h"
+#include "../models/effects/detune.h"
 #include <imgui.h>
 
 Note defaultNote = { 0, 1, 69 };
@@ -53,19 +54,26 @@ void LayerEditorWindow::update() {
 	}
 
 	const char* effects[] = { "detune" };
-	const IEffect eClasses[] = {};
+
 	if (ImGui::BeginPopupModal("addEffect")) {
 		ImGui::Combo("effect", &selectedEffect, effects, IM_ARRAYSIZE(effects));
 		if(ImGui::Button("add effect") ){
-			layer->effects.push_back(eClasses[selectedEffect]);
+			switch (selectedEffect) {
+			case 0: //detune
+				layer->effects.push_back(new Detune(0));
+			}
+			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
 	}
 	for (int i = 0; i < layer->effects.size(); i++) {
 		ImGui::PushID(i);
 
-		if (ImGui::BeginChild("##panel", ImVec2(ImGui::GetContentRegionAvail().x, 80.0f), true)) {
-			ImGui::Text("Panel %d", i);
+		if (ImGui::BeginChild("##panel", ImVec2(ImGui::GetContentRegionAvail().x, 100.f), true)) {
+			layer->effects[i]->render();
+			if (ImGui::Button("remove")) {
+				layer->effects.erase(layer->effects.begin() + i--);
+			}
 		}
 		ImGui::EndChild();
 

@@ -86,10 +86,10 @@ void AudioPlayer::play(std::vector<std::pair<Note*, Layer*>> toPlay) {
         float amplitude = 1;
 
         //apply effects
-        for (IEffect e : layer->effects) {
-            std::pair<float, float> applied = e.apply(amplitude, freq);
-            freq = applied.first;
-            amplitude = applied.second;
+        for (IEffect* e : layer->effects) {
+            std::pair<float, float> applied = e->apply(amplitude, freq);
+            freq = applied.second;
+            amplitude = applied.first;
         }
 
 
