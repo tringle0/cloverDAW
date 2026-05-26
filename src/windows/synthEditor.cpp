@@ -53,12 +53,14 @@ void LayerEditorWindow::update() {
 		ImGui::OpenPopup("addEffect", NULL);
 	}
 
-	const char* effects[] = { "detune"};
+	const char* effects[] = { "detune" };
+	const IEffect eClasses[] = {};
 	if (ImGui::BeginPopupModal("addEffect")) {
-		if (ImGui::Combo("effect", &selectedEffect, effects, IM_ARRAYSIZE(effects))) {
-
-			ImGui::CloseCurrentPopup();
+		ImGui::Combo("effect", &selectedEffect, effects, IM_ARRAYSIZE(effects));
+		if(ImGui::Button("add effect") ){
+			layer->effects.push_back(eClasses[selectedEffect]);
 		}
+		ImGui::EndPopup();
 	}
 	for (int i = 0; i < layer->effects.size(); i++) {
 		ImGui::PushID(i);
