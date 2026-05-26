@@ -12,10 +12,6 @@ void LayerEditorWindow::update() {
 
 	//volume slider
 	ImGui::SliderFloat("volume (%)", &layer->volume, 0.0f, 1.0f, "%.3f");
-
-	ImGui::SliderFloat("detune (semiTones)", &layer->synth.detune, -24.0f, 24.0f);
-
-	
 	
 	//waveform dropdown
 	const char* items[] = {"triangle", "sawtooth", "sine", "square", "noise"};
