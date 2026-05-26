@@ -55,8 +55,8 @@ void AudioPlayer::changeVolume(float vol)
 }
 
 // Convert MIDI number to frequency
-float midiToFreq(int midi) {
-    return 440.0f * std::pow(2.0f, (midi - 69) / 12.0f);
+float midiToFreq(int midi, float detuneSemi) {
+    return 440.0f * std::pow(2.0f, (midi - 69 + detuneSemi) / 12.0f);
 }
 
 void AudioPlayer::play(std::vector<std::pair<Note*, Layer*>> toPlay) {
@@ -84,7 +84,7 @@ void AudioPlayer::play(std::vector<std::pair<Note*, Layer*>> toPlay) {
     for (auto& pair : toPlay) {
         Note* note = pair.first;
         Layer* layer = pair.second;
-        float freq = midiToFreq(note->pitch + layer->synth.detune);
+        float freq = midiToFreq(note->pitch, layer->synth.detune);
         float phaseDelta = freq / sampleRate;
         float& localPhase = notePhases[note]; // each note gets its own phase per buffer fill
 

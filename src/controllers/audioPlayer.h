@@ -27,10 +27,14 @@ public:
     // toggles the playing of the waveform
     void triggerWave(bool shouldPlay);
 
+    float mimidiToFreq(int midi, float detuneSemi);
+
     // changing volume
     void changeVolume(float vol);
 
     AudioPlayer();
+
+    
 
 private:
     SDL_AudioStream* audioStream = nullptr; 
