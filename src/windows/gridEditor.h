@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <vector>
 #include "../models/window.h"
 
@@ -32,7 +33,10 @@ private:
 	ImVec2 gridPos = ImVec2(0, 72);		//cells
 	ImVec2 gridScale = ImVec2(16,24);	//cells
 
+	//the currently displayed layer on the grid
 	Layer* layer = nullptr;
+
+
 	ImDrawList* dl = nullptr;
 
 	//colors

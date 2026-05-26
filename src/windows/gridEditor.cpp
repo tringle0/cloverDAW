@@ -1,6 +1,7 @@
 #include "gridEditor.h"
 #include <algorithm>
 #include <string>
+#include <iostream>
 #include <cmath>
 #include <imgui.h>
 #include "../app.h"
@@ -107,8 +108,10 @@ void GridEditorWindow::editNotes() {
 	ImVec2 mousePos = ImGui::GetMousePos();
 
 	//convert mouse position to grid coordinates (beat, pitch)
-	float mouseBeat = gridPos.x + (mousePos.x - viewPos.x) / (cellSize.x * subdivisions);
+	float mouseBeat = gridPos.x / subdivisions + (mousePos.x - viewPos.x) / (cellSize.x * subdivisions);
 	int mousePitch = gridPos.y - (int)((mousePos.y - viewPos.y) / cellSize.y);
+
+	std::cout << gridPos.x << std::endl;
 
 	//clamp values
 	mouseBeat = std::max(0.f, mouseBeat);
@@ -120,11 +123,12 @@ void GridEditorWindow::editNotes() {
 	if (ImGui::IsMouseClicked(0)) {
 		dragStart = floorf(mouseBeat * subdivisions) / subdivisions;
 	}
-	//add note when released
+	// add note when released
 	if (ImGui::IsMouseReleased(0)) {
-		dragEnd = ceil(mouseBeat * subdivisions) / subdivisions;
+		dragEnd = (floorf(mouseBeat * subdivisions) + 1.0f) / subdivisions;
 		if (dragEnd > dragStart) {
-			float noteLength = dragEnd-dragStart;
+			float noteLength = dragEnd - dragStart;
+			std::cout << dragStart << std::endl;
 			layer->notes.push_back({ dragStart, noteLength, mousePitch });
 		}
 	}
