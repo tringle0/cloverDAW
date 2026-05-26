@@ -1,8 +1,8 @@
-#pragma once
-#include <imgui.h>
+#include "window.h"
 #include <string>
 #include <iostream>
-#include "window.h"
+#include "../app.h"
+#include "uniqueCounter.h"
 
 UniqueCounter IWindow::uc;
 

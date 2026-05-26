@@ -1,13 +1,12 @@
 #pragma once
 #include <string>
 #include <imgui.h>
-#include "uniqueCounter.h"
-#include "../app.h"
 
-//forward declaration to avoid circular declarations
+//forward declarations
 class WindowManager;
 class Song;
 class App;
+class UniqueCounter;
 
 //interface for a displayed window
 class IWindow {

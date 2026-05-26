@@ -8,6 +8,7 @@
       ]
     },
     "juce",
-    "sdl3"
+    "sdl3",
+    "nlohmann-json"
   ]
 }

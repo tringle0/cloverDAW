@@ -26,7 +26,7 @@ void App::init() {
     sessionData = {};
     audio.init();
  
-
+    sm.init(this);
 
     //setup window manager
     wm.addWindow(new LayerListWindow(this));

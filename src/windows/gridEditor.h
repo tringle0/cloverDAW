@@ -2,9 +2,12 @@
 #include <vector>
 #include "../models/window.h"
 
+//forward declaration
+class Layer;
+
 class GridEditorWindow : public IWindow {
 public:
-	GridEditorWindow(App *app) : IWindow("piano roll", app, ImVec2(640, 480), false, true) {};
+	GridEditorWindow(App *app) ;
 	void update() override;
 
 private:
@@ -43,4 +46,5 @@ private:
 	void drawNotes();
 	void scaleGrid();
 	void editNotes();
+	void drawPlayhead();
 };

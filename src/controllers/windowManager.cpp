@@ -1,8 +1,6 @@
-#pragma once
 #include "windowManager.h"
-#include "imgui.h"
 #include "../models/window.h"
-#include <iostream>
+#include <string>
 
 void WindowManager::addWindow(IWindow* window) {
 	windows.push_back(window);

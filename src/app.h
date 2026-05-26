@@ -6,12 +6,14 @@
 #include "controllers/notePlayer.h"
 #include "models/sessionData.h"
 #include "controllers/audioPlayer.h"
+#include "controllers/saveManager.h"
 
 class App {
 public:
-	
+
 	SessionData sessionData;
 	WindowManager wm;
+	SaveManager sm;
 	Song song;
 	AudioPlayer audio;
 	NotePlayer nPlayer;

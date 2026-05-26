@@ -1,10 +1,14 @@
-#pragma once
-#include <cmath>
-#include <algorithm>
-#include <iostream>
-#include <string>
 #include "gridEditor.h"
+#include <algorithm>
+#include <string>
+#include <cmath>
+#include <imgui.h>
+#include "../app.h"
+#include "../models/layer.h"
+#include "../models/note.h"
 
+
+GridEditorWindow::GridEditorWindow(App* app) : IWindow("piano roll", app, ImVec2(640, 480), false, true) {}
 
 void GridEditorWindow::drawNote(float start, float length, float pitch, ImColor color) {
 	// cells relative to top right corner
@@ -140,6 +144,26 @@ void GridEditorWindow::editNotes() {
 	}
 }
 
+void GridEditorWindow::drawPlayhead() {
+	if (!song) return;
+	float playheadBeat = app->sessionData.playheadBeat;
+
+	// convert beat to x position
+	float x = viewPos.x + (playheadBeat * subdivisions - gridPos.x) * cellSize.x;
+
+	// don't draw if outside view
+	if (x < viewPos.x || x > viewPos.x + viewScale.x) return;
+
+	dl->AddLine(
+		{ x, viewPos.y },
+		{ x, viewPos.y + viewScale.y },
+		IM_COL32(255, 80, 80, 255),  // red
+		3.0f
+	);
+}
+
+
+
 void GridEditorWindow::update() {
 	//calculate variables
 	dl = ImGui::GetWindowDrawList();
@@ -150,7 +174,7 @@ void GridEditorWindow::update() {
 		else layer = song->layers[app->sessionData.selectedLayerIndex];
 
 	drawGrid();
-
+	drawPlayhead();
 	//display layer name
 	if (layer != nullptr) {
 		ImGui::Text(layer->name.c_str());

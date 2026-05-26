@@ -1,6 +1,6 @@
 #pragma once
-#include "audioPlayer.h"
 
+//forward delcarations
 class App;
 
 class NotePlayer {

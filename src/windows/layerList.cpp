@@ -1,9 +1,15 @@
 #include "layerList.h"
-#include "synthEditor.h"
-#include "imgui.h"
+#include <vector>
 #include <string>
+#include <imgui.h>
+#include "../app.h"
+#include "../models/layer.h"
+#include "../models/uniqueCounter.h"
+#include "../windows/synthEditor.h"
 
 UniqueCounter LayerListWindow::nextLayerDefaultName;
+
+LayerListWindow::LayerListWindow(App* app) : IWindow("layer list", app, ImVec2(250, 450), false, false) {}
 
 void LayerListWindow::update() {
 	//get convert layer names to char arrays
@@ -12,11 +18,9 @@ void LayerListWindow::update() {
 		items.push_back(l->name.c_str());
 	}
 
-
+	//layer list
 	ImGui::SetNextItemWidth(225);
-	if (ImGui::ListBox("##layer list", &app->sessionData.selectedLayerIndex, items.data(), items.size(), 20)) {
-		
-	}
+	ImGui::ListBox("##layer list", &app->sessionData.selectedLayerIndex, items.data(), items.size(), 20);
 
 	//add layer button
 	if (ImGui::Button("add")) {

@@ -1,16 +1,16 @@
 #include "playback.h"
-#include "../app.h"
-
 #include <imgui.h>
-
+#include <chrono>
+#include "../app.h"
+#include "../models/song.h"
 
 float secondsToBeats(float seconds, float bpm) {
 	return seconds * (bpm / 60.f);
 }
 
+PlaybackWindow::PlaybackWindow(App* app) : IWindow("playback", app, ImVec2(240, 80), false, false) {}
 
 void PlaybackWindow::startPlayback() {
-	app->sessionData.playing = true;
 	startedTime = now;
 	startedBeat = app->sessionData.playheadBeat;
 }
@@ -36,7 +36,7 @@ void PlaybackWindow::update() {
 		}
 	}
 
-	ImGui::SameLine;
+	ImGui::SameLine();
 	ImGui::Checkbox("loop", &loop);
 
 	//calculate current beat

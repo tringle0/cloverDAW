@@ -3,7 +3,7 @@
 #include <unordered_map>
 
 
-//forward declaration
+//forward declarations
 class IWindow;
 
 //simple window manager that creates windows

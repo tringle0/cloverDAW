@@ -1,7 +1,8 @@
 #pragma once
-#include "../models/window.h"
 #include <chrono>
+#include "../models/window.h"
 
+//forward declarations
 class App;
 
 class PlaybackWindow : public IWindow {
@@ -14,7 +15,7 @@ private:
 	bool loop = false;
 
 public:
-	PlaybackWindow(App* app) : IWindow("playback", app, ImVec2(240, 80), false, false) {}
+	PlaybackWindow(App* app);
 	void update();
 	void startPlayback();
 	void stopPlayback();

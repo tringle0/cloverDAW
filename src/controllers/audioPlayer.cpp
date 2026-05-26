@@ -1,4 +1,8 @@
 #include "audioPlayer.h"
+#include "../models/synth.h"
+#include "../models/note.h"
+#include "../models/layer.h"
+#include "../models/effect.h"
 
 #include <iostream>
 
@@ -50,7 +54,13 @@ void AudioPlayer::triggerWave(bool shouldPlay)
     }
 }
 
-// Convert MIDI number to frequency
+
+float toPerceivedVolume(float linear) {
+    if (linear <= 0.0f) return 0.0f;
+    float dB = (linear - 1.0f) * 60.0f; 
+    return std::pow(10.0f, dB / 20.0f);
+}
+
 float midiToFreq(int midi) {
     return 440.0f * std::pow(2.0f, (midi - 69) / 12.0f);
 }
@@ -83,7 +93,7 @@ void AudioPlayer::play(std::vector<std::pair<Note*, Layer*>> toPlay) {
 
         //individual sample
         float freq = midiToFreq(note->pitch);
-        float amplitude = 1;
+        float amplitude = toPerceivedVolume(layer->volume);
 
         //apply effects
         for (IEffect* e : layer->effects) {
@@ -117,7 +127,7 @@ void AudioPlayer::play(std::vector<std::pair<Note*, Layer*>> toPlay) {
                 break;
             }
 
-            buffer[i] += sampleVal * layer->volume;
+            buffer[i] += sampleVal * amplitude;
 
             localPhase += phaseDelta;
             if (localPhase >= 1.0f) localPhase -= 1.0f;
