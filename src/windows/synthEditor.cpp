@@ -26,11 +26,9 @@ void LayerEditorWindow::update() {
 	if (isHeld) {
 		app->audio.play({ { &defaultNote, layer} });
 	}
-	if (ImGui::IsItemDeactivated()) {
-
-	}
 
 	//rename layer button
+	ImGui::SameLine();
 	if (ImGui::Button("rename") && song->layers.size() > 0) {
 		ImGui::OpenPopup("rename", NULL);
 	}
@@ -50,5 +48,26 @@ void LayerEditorWindow::update() {
 		ImGui::EndPopup();
 	}
 
+	ImGui::Text("effects");
+	if(ImGui::Button("add effect") ){
+		ImGui::OpenPopup("addEffect", NULL);
+	}
 
+	const char* effects[] = { "detune"};
+	if (ImGui::BeginPopupModal("addEffect")) {
+		if (ImGui::Combo("effect", &selectedEffect, effects, IM_ARRAYSIZE(effects))) {
+
+			ImGui::CloseCurrentPopup();
+		}
+	}
+	for (int i = 0; i < layer->effects.size(); i++) {
+		ImGui::PushID(i);
+
+		if (ImGui::BeginChild("##panel", ImVec2(ImGui::GetContentRegionAvail().x, 80.0f), true)) {
+			ImGui::Text("Panel %d", i);
+		}
+		ImGui::EndChild();
+
+		ImGui::PopID();
+	}
 }
