@@ -29,6 +29,8 @@ public:
 
     AudioPlayer();
 
+    
+
 private:
     SDL_AudioStream* audioStream = nullptr; 
 

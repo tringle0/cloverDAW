@@ -50,7 +50,7 @@ add_executable (cloverDAW
 
 
 
- "src/models/effects/detune.h")
+ "src/models/effects/detune.h" "src/models/effects/eq.h")
 
 target_include_directories(cloverDAW PRIVATE
     ${CMAKE_SOURCE_DIR}
