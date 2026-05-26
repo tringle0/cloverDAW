@@ -1,5 +1,6 @@
 #pragma once
 #include "../effect.h"
+#include <imgui.h>
 
 class Detune : public IEffect {
 public:
@@ -7,8 +8,9 @@ public:
 		return {amp, freq * pow(2.0f, detune/12.0f)}
 	}
 
-
-
-private:
+	void render() override {
+		ImGui::SliderFloat("detune (semitones)", &Detune->detune, -24.0f, 24.0f, "%.3f");
+	}
 	float detune; // number of semitones
+
 };

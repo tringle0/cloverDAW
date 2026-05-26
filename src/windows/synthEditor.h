@@ -10,6 +10,7 @@ class LayerEditorWindow : public IWindow{
 private:
 	Layer* layer;
 	int selectedWaveForm; //for the dropdown
+	int selectedEffect; //for the dropdown
 
 public:
 	LayerEditorWindow(int layerIndex, App* app) : IWindow("synth editor", app, ImVec2(360,240), true, false) {
