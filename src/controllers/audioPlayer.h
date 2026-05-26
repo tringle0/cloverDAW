@@ -8,6 +8,7 @@
 #include "../models/synth.h"
 #include "../models/note.h"
 #include "../models/layer.h"
+#include "../models/effect.h"
 
 class AudioPlayer
 {
@@ -22,15 +23,9 @@ public:
     // Generates the waveform and pushes it straight to speakers
 
     void play(std::vector<std::pair<Note*, Layer*>> toPlay);
-    void update(Synth& currentSynthState);
 
     // toggles the playing of the waveform
     void triggerWave(bool shouldPlay);
-
-    float mimidiToFreq(int midi, float detuneSemi);
-
-    // changing volume
-    void changeVolume(float vol);
 
     AudioPlayer();
 

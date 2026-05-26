@@ -5,6 +5,8 @@
 #include "../models/window.h"
 #include <imgui.h>
 
+Note defaultNote = { 0, 1, 69 };
+
 void LayerEditorWindow::update() {
 	ImGui::Text(layer->name.c_str());
 
@@ -22,16 +24,15 @@ void LayerEditorWindow::update() {
 	}
 
 	// play waveform
-	ImGui::Button("Test Waveform");
+	ImGui::Button("play");
 	bool isHeld = ImGui::IsItemActive();
-	if (isHeld && !wasTestHeld) {
-		app->audio.triggerWave(true);
+	if (isHeld) {
+		app->audio.play({ { &defaultNote, layer} });
 	}
-	else if (!isHeld && wasTestHeld) {
-		app->audio.triggerWave(false);
+	if (ImGui::IsItemDeactivated()) {
+
 	}
-	wasTestHeld = isHeld; //flag for starting and stoping playing of wave
-	
+
 	//rename layer button
 	if (ImGui::Button("rename") && song->layers.size() > 0) {
 		ImGui::OpenPopup("rename", NULL);

@@ -1,6 +1,7 @@
 #pragma once
 #include "synth.h"
 #include "note.h"
+#include "effect.h"
 #include <string>
 
 //a layer represents a set of notes of one instrument type
@@ -14,4 +15,5 @@ public:
 
 	Synth synth;
 	std::vector<Note> notes;
+	std::vector<IEffect> effects;
 };

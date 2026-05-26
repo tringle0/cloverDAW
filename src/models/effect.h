@@ -1,3 +1,8 @@
+#pragma once
+
 class IEffect {
-	virtual float[] applyEffect(float float[]) {};
+public:
+	//returns new amp freq pair
+	virtual std::pair<float, float> apply(float amp, float freq) { return { amp, freq }; };
+
 };

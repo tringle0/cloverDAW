@@ -5,10 +5,6 @@ enum WaveForm {
 	triangle, sawtooth, sine, square, noise
 };
 
-class IEffect {
-	virtual void apply();
-};
-
 struct Envelope {
 public:
 	float attack = 0; //in ms
@@ -21,9 +17,5 @@ class Synth {
 public:
 	WaveForm waveform = sawtooth;
 	Envelope envelope;
-
-	float detune = 0;
-
-	std::vector<IEffect> effects;
 };
 
